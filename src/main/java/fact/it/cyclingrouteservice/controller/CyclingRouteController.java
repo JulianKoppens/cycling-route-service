@@ -40,7 +40,7 @@ public class CyclingRouteController {
         return cyclingRouteRepository.findCyclingRoutesByNameContaining(name);
     }
 
-    @GetMapping("/cyclingRoutes/{RouteCode}")
+    @GetMapping("/cyclingRoutes/code/{routeCode}")
     public CyclingRoute getCyclingRouteByRouteCode(@PathVariable String routeCode){
         return cyclingRouteRepository.findCyclingRouteByRouteCode(routeCode);
     }
