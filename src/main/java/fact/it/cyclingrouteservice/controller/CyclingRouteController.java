@@ -30,6 +30,11 @@ public class CyclingRouteController {
         }
     }
 
+    @GetMapping("/cyclingRoutes")
+    public List<CyclingRoute> all(){
+        return cyclingRouteRepository.findAll();
+    }
+
     @GetMapping("/cyclingRoutes/name/{name}")
     public List<CyclingRoute> getCyclingRoutesByName(@PathVariable String name){
         return cyclingRouteRepository.findCyclingRoutesByNameContaining(name);
