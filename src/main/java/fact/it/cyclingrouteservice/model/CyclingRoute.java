@@ -14,14 +14,24 @@ public class CyclingRoute {
 
     @Column(unique = true)
     private String routeCode;
+    private String postcode;
 
     public CyclingRoute() {
     }
 
-    public CyclingRoute(String name, String img_url, String routeCode) {
+    public CyclingRoute(String name, String img_url, String routeCode, String postcode) {
         this.name = name;
         this.img_url = img_url;
         this.routeCode = routeCode;
+        this.postcode = postcode;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 
     public int getId() {

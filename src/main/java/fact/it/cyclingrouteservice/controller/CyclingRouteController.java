@@ -21,10 +21,10 @@ public class CyclingRouteController {
         if(cyclingRouteRepository.count()==0){
             cyclingRouteRepository.save(new CyclingRoute("drieprovincieroute",
                     "https://www.drieprovincienroute.be/sites/default/files/Welkom-6.jpg",
-                    "123"));
+                    "123", "3945"));
             cyclingRouteRepository.save(new CyclingRoute("Fietsen door de bomen",
                     "https://www.visitlimburg.be/sites/default/files/public/styles/header_small/public/2020-02/fietslus-fietsen-door-de-bomen.jpg?h=457ab839&itok=bVsfQQQ9",
-                    "456"));
+                    "456", "3980"));
             System.out.println(cyclingRouteRepository.findCyclingRouteByRouteCode("123").getName());
 
         }
@@ -43,6 +43,11 @@ public class CyclingRouteController {
     @GetMapping("/cyclingRoutes/code/{routeCode}")
     public CyclingRoute getCyclingRouteByRouteCode(@PathVariable String routeCode){
         return cyclingRouteRepository.findCyclingRouteByRouteCode(routeCode);
+    }
+
+    @GetMapping("/cyclingRoutes/postcode/{postcode}")
+    public List<CyclingRoute> getRoutesByPostcode(@PathVariable String postcode){
+        return cyclingRouteRepository.findAllByPostcode(postcode);
     }
 
 }

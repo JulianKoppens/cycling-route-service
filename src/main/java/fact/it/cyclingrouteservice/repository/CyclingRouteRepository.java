@@ -10,6 +10,7 @@ import java.util.List;
 public interface CyclingRouteRepository extends JpaRepository<CyclingRoute, Integer> {
     CyclingRoute findCyclingRouteByRouteCode(String RouteCode);
     List<CyclingRoute> findCyclingRoutesByNameContaining(String name);
+    List<CyclingRoute> findAllByPostcode(String postcode);
 
 
 }
