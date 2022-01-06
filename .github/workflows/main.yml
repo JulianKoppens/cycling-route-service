@@ -21,12 +21,12 @@ jobs:
           distribution: 'adopt'
           
       - name: Start Postgres for integration test
-          uses: harmon758/postgresql-action@v1
-          with:
-            postgresql version: '11'  # See https://hub.docker.com/_/postgres for available versions
-            postgresql user: root
-            postgresql password: ${{ secrets.POSTGRES_PASSWORD }}
-            postgresql db: postgres
+        uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: '11'  # See https://hub.docker.com/_/postgres for available versions
+          postgresql user: root
+          postgresql password: ${{ secrets.POSTGRES_PASSWORD }}
+          postgresql db: postgres
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
@@ -47,10 +47,10 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JulianKoppens_cycling-route-service
 
       - name: Docker login
-          run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-            - name: Docker Build
-              run: docker build -t ${{ secrets.DOCKER_USER }}/advprog-ticket:latest .
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/advprog-ticket:latest .
 
-            - name: Upload container to Docker Hub with Push
-              run: docker push ${{ secrets.DOCKER_USER }}/advprog-ticket:latest
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/advprog-ticket:latest
