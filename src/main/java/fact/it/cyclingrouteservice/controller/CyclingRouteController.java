@@ -29,7 +29,6 @@ public class CyclingRouteController {
 
         }
     }
-//Test
     @GetMapping("/cyclingRoutes")
     public List<CyclingRoute> all(){
         return cyclingRouteRepository.findAll();
