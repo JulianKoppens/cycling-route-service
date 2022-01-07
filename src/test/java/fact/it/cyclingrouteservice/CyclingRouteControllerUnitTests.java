@@ -122,4 +122,25 @@ public class CyclingRouteControllerUnitTests {
                 .andExpect(jsonPath("$[0].postcode", is("3945")));
 
     }
+
+
+
+    @Test
+    public void PostRoute() throws Exception{
+        CyclingRoute cyclingRoute2 = new CyclingRoute("vierprovincieroute",
+                "url7",
+                "147", "3983");
+
+        mockMvc.perform(post("/cyclingRoutes/add")
+                .content(mapper.writeValueAsString(cyclingRoute2))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("vierprovincieroute")))
+                .andExpect(jsonPath("$.img_url", is("url7")))
+                .andExpect(jsonPath("$.routeCode", is("147")))
+                .andExpect(jsonPath("$.postcode", is("3983")));
+    }
+
+
 }
