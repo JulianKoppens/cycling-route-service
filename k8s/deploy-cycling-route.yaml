@@ -6,7 +6,8 @@ metadata:
     app: cycling-route-service
 spec:
   ports:
-    - port: 5432
+    - protocol: TCP
+      port: 5432
   selector:                       # Selects any Pod with labels `app=review-service,tier=mongo`
     app: cycling-route-service
     tier: postgres
