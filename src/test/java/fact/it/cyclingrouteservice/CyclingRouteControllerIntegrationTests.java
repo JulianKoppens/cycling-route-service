@@ -112,6 +112,39 @@ public class CyclingRouteControllerIntegrationTests {
                 .andExpect(jsonPath("$[1].postcode", is("3980")));
     }
 
+    @Test
+    public void PostCyclingRoute() throws Exception {
+
+        CyclingRoute newCyclingroute = new CyclingRoute("Fietsen", "url2", "987", "3945");
+
+        mockMvc.perform(post("/cyclingRoutes/add")
+                .content(mapper.writeValueAsString(newCyclingroute))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("Fietsen")))
+                .andExpect(jsonPath("$.img_url", is("url2")))
+                .andExpect(jsonPath("$.routeCode", is("987")))
+                .andExpect(jsonPath("$.postcode", is("3945")));
+    }
+
+
+//    @Test
+//    public void PutCyclingroute() throws Exception {
+//
+//        CyclingRoute updatedRoute = new CyclingRoute("Fietsen en eten", "url2", "987", "3945");
+//
+//        mockMvc.perform(put("/cyclingRoutes/update")
+//                .content(mapper.writeValueAsString(updatedRoute))
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.name", is("Fietsen en eten")))
+//                .andExpect(jsonPath("$.img_url", is("url2")))
+//                .andExpect(jsonPath("$.routeCode", is("987")))
+//                .andExpect(jsonPath("$.postcode", is("3945")));
+//    }
+
 
 
 
