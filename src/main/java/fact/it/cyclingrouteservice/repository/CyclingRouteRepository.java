@@ -11,6 +11,4 @@ public interface CyclingRouteRepository extends JpaRepository<CyclingRoute, Inte
     CyclingRoute findCyclingRouteByRouteCode(String RouteCode);
     List<CyclingRoute> findCyclingRoutesByNameContaining(String name);
     List<CyclingRoute> findAllByPostcode(String postcode);
-
-
 }
