@@ -19,7 +19,7 @@ jobs:
         uses: harmon758/postgresql-action@v1
         with:
           postgresql version: '11'  # See https://hub.docker.com/_/postgres for available versions
-          postgresql user: root
+          postgresql user: postgres
           postgresql password: ${{ secrets.POSTGRES_PASSWORD }}
           postgresql db: postgres
 
