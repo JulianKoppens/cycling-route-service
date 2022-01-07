@@ -3,9 +3,8 @@ package fact.it.cyclingrouteservice.controller;
 import fact.it.cyclingrouteservice.model.CyclingRoute;
 import fact.it.cyclingrouteservice.repository.CyclingRouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -50,4 +49,31 @@ public class CyclingRouteController {
         return cyclingRouteRepository.findAllByPostcode(postcode);
     }
 
+    @PostMapping("/cyclingRoutes/add")
+    public CyclingRoute addRoute(@RequestBody CyclingRoute cyclingRoute){
+        cyclingRouteRepository.save(cyclingRoute);
+        return cyclingRoute;
+    }
+
+    @PutMapping("/cyclingRoutes/update")
+    public CyclingRoute updateRoute(@RequestBody CyclingRoute updateCyclingRoute){
+        CyclingRoute cyclingRoute = cyclingRouteRepository.findCyclingRouteByRouteCode(updateCyclingRoute.getRouteCode());
+
+        cyclingRoute.setName(updateCyclingRoute.getName());
+        cyclingRoute.setImg_url(updateCyclingRoute.getImg_url());
+        cyclingRoute.setPostcode(updateCyclingRoute.getPostcode());
+
+        cyclingRouteRepository.save(cyclingRoute);
+
+        return cyclingRoute;
+    }
+
+    @DeleteMapping("/cyclingRoutes/delete/{routeCode}")
+    public ResponseEntity deleteRoute(@PathVariable String routeCode){
+        CyclingRoute cyclingRoute = cyclingRouteRepository.findCyclingRouteByRouteCode(routeCode);
+        if(cyclingRoute!=null){
+            cyclingRouteRepository.delete(cyclingRoute);
+        }
+        return ResponseEntity.ok().build();
+    }
 }
