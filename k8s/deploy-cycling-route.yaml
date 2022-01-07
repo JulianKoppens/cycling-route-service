@@ -1,5 +1,5 @@
 apiVersion: v1                    # API version
-kind: Service                     # Type of kubernetes resource
+kind: Service                     # Type of kubernetes resource 
 metadata:
   name: cycling-route-service-postgres      # Name of the service
   labels:                         # Labels that will be applied to the service
@@ -8,7 +8,7 @@ spec:
   ports:
     - port: 5432
   selector:                       # Selects any Pod with labels `app=review-service,tier=mongo`
-    app: review-service
+    app: cycling-route-service
     tier: postgres
   clusterIP: None
 ---
@@ -16,12 +16,12 @@ apiVersion: apps/v1
 kind: Deployment                    # Type of the kubernetes resource
 metadata:
   name: cycling-route-service-postgres-deployment           # Name of the deployment
-  labels:                           # Labels applied to this deployment
+  labels:                           # Labels applied to this deployment 
     app: cycling-route-service
 spec:
   selector:
     matchLabels:                    # This deployment applies to the Pods matching the specified labels
-      app: cycling-route-service
+      app: cycling-route-route-service
       tier: postgres
   strategy:
     type: Recreate
@@ -32,14 +32,14 @@ spec:
         tier: postgres
     spec:                           # The spec for the containers that will be run inside the Pods in this deployment
       containers:
-        - image: postgres                # The container image
+      - image: postgres                # The container image
+        name: postgres
+        ports:
+        - containerPort: 5432        # The port that the container exposes       
           name: postgres
-          ports:
-            - containerPort: 5432        # The port that the container exposes
-              name: postgres
-          env:
+        env:
         - name: POSTGRES_PASSWORD
-          value: abc123
+          value: "abc123"
 ---
 apiVersion: apps/v1           # API version
 kind: Deployment              # Type of kubernetes resource
@@ -58,33 +58,33 @@ spec:
         app: cycling-route-service-server
     spec:                     # Spec for the containers that will be run in the Pods
       containers:
-        - name: cycling-route-service-server
-          image: juliankoppens/cycling-route-service
-          imagePullPolicy: Always
-          ports:
-            - name: http
-              containerPort: 8051 # The port that the container exposes
-          resources:
-            limits:
-              cpu: 0.2
-              memory: "200Mi"
-          env:                    # Environment variables supplied to the Pod
-            - name: POSTGRES_DB_HOST
-              value: "cycling-route-service-postgres"
-            - name: POSTGRES_DB_PORT
-              value: "5432"
+      - name: cycling-route-service-server
+        image: juliankoppens/cycling-route-service
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            containerPort: 8051 # The port that the container exposes
+        resources:
+          limits:
+            cpu: 0.2
+            memory: "200Mi"
+        env:                    # Environment variables supplied to the Pod
+        - name: POSTGRES_HOST
+          value: "cycling-route-service-postgres"
+        - name: POSTGRES_PORT
+          value: "5432"
 ---
 apiVersion: v1                   # API version
 kind: Service                    # Type of the kubernetes resource
-metadata:
+metadata:                     
   name: cycling-route-service-server    # Name of the service
   labels:                        # Labels that will be applied to this service
     app: cycling-route-service-server
-spec:
+spec:                         
   type: NodePort                 # The service will be exposed by opening a Port on each node and proxying it. Allowing connections from outside the cluster
   selector:
     app: cycling-route-service-server   # The service exposes Pods with label `app=review-service-server`
   ports:                         # Forward incoming connections on port 8052 to the target port 8052
-    - name: http
-      port: 8051
-      targetPort: 8051
+  - name: http
+    port: 8051
+    targetPort: 8051
