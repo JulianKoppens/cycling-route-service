@@ -21,7 +21,7 @@ metadata:
 spec:
   selector:
     matchLabels:                    # This deployment applies to the Pods matching the specified labels
-      app: cycling-route-info-service
+      app: cycling-route-service
       tier: postgres
   strategy:
     type: Recreate
@@ -59,7 +59,7 @@ spec:
     spec:                     # Spec for the containers that will be run in the Pods
       containers:
       - name: cycling-route-service-server
-        image: miverboven/book-info-service-ex
+        image: juliankoppens/cycling-route-service
         imagePullPolicy: Always
         ports:
           - name: http
