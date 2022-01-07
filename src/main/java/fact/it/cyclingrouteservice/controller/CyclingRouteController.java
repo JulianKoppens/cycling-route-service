@@ -24,7 +24,7 @@ public class CyclingRouteController {
             cyclingRouteRepository.save(new CyclingRoute("Fietsen door de bomen",
                     "https://www.visitlimburg.be/sites/default/files/public/styles/header_small/public/2020-02/fietslus-fietsen-door-de-bomen.jpg?h=457ab839&itok=bVsfQQQ9",
                     "456", "3980"));
-            System.out.println(cyclingRouteRepository.findCyclingRouteByRouteCode("123").getName());
+//            System.out.println(cyclingRouteRepository.findCyclingRouteByRouteCode("123").getName());
 
         }
     }
